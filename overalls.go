@@ -124,7 +124,7 @@ func main() {
 	var err error
 	var wd string
 
-	projectPath = srcPath + projectFlag + "/"
+	projectPath = filepath.FromSlash(srcPath + projectFlag + "/")
 
 	if err = os.Chdir(projectPath); err != nil {
 		fmt.Printf("\n**invalid project path '%s'\n%s\n", projectFlag, err)
@@ -148,11 +148,16 @@ func processDIR(wg *sync.WaitGroup, fullPath, relPath string, out chan<- []byte)
 
 	defer wg.Done()
 
+	pkg := strings.Replace(relPath, "\\", "/", -1)
+	cmd := exec.Command("go", "test",
+		"-covermode="+coverFlag,
+		"-coverprofile=profile.coverprofile",
+		"-outputdir="+fullPath, pkg)
+
 	if debugFlag {
-		fmt.Println("Processing: go test -covermode=" + coverFlag + " -coverprofile=profile.coverprofile -outputdir=" + fullPath + "/ " + relPath)
+		fmt.Printf("Processing: %s\n", strings.Join(cmd.Args, " "))
 	}
 
-	cmd := exec.Command("go", "test", "-covermode="+coverFlag, "-coverprofile=profile.coverprofile", "-outputdir="+fullPath+"/", relPath)
 	if err := cmd.Run(); err != nil {
 		fmt.Println("ERROR:", err)
 		os.Exit(1)
@@ -184,9 +189,10 @@ func testFiles() {
 			return filepath.SkipDir
 		}
 
-		rel = "./" + rel
+		rel = filepath.FromSlash("./" + rel)
+		pattern := filepath.FromSlash(rel + "/*_test.go")
 
-		if files, err := filepath.Glob(rel + "/*_test.go"); len(files) == 0 || err != nil {
+		if files, err := filepath.Glob(pattern); len(files) == 0 || err != nil {
 
 			if err != nil {
 				fmt.Println("Error checking for test files")

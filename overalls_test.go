@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -33,6 +34,6 @@ func TestOveralls(t *testing.T) {
 
 	final := string(fileBytes)
 	NotEqual(t, strings.Index(final, "main.go"), -1)
-	NotEqual(t, strings.Index(final, "test-files/good/main.go"), -1)
-	NotEqual(t, strings.Index(final, "test-files/good2/main.go"), -1)
+	NotEqual(t, strings.Index(final, filepath.FromSlash("test-files/good/main.go")), -1)
+	NotEqual(t, strings.Index(final, filepath.FromSlash("test-files/good2/main.go")), -1)
 }

@@ -156,6 +156,8 @@ func processDIR(wg *sync.WaitGroup, fullPath, relPath string, out chan<- []byte)
 
 	if debugFlag {
 		fmt.Printf("Processing: %s\n", strings.Join(cmd.Args, " "))
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
 	}
 
 	if err := cmd.Run(); err != nil {

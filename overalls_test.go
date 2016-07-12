@@ -23,13 +23,13 @@ import (
 
 func TestOveralls(t *testing.T) {
 
-	args := []string{"-project=github.com/go-playground/overalls/test-files", "-covermode=count", "-debug"}
+	args := []string{"-project=github.com/at15/overalls/test-files", "-covermode=count", "-debug"}
 
 	cmd := exec.Command("overalls", args...)
 	err := cmd.Run()
 	Equal(t, err, nil)
 
-	fileBytes, err := ioutil.ReadFile(srcPath + "github.com/go-playground/overalls/test-files/overalls.coverprofile")
+	fileBytes, err := ioutil.ReadFile(srcPath + "github.com/at15/overalls/test-files/overalls.coverprofile")
 	Equal(t, err, nil)
 
 	final := string(fileBytes)

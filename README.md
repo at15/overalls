@@ -4,6 +4,7 @@ Package overalls
 [![Build Status](https://semaphoreci.com/api/v1/projects/a0634385-0174-48b1-9190-fb2645fdb9a2/501047/badge.svg)](https://semaphoreci.com/joeybloggs/overalls)
 [![GoDoc](https://godoc.org/github.com/go-playground/overalls?status.svg)](https://godoc.org/github.com/go-playground/overalls)
 [![Build Status](https://travis-ci.org/at15/overalls.svg?branch=master)](https://travis-ci.org/at15/overalls)
+[![Coverage Status](https://coveralls.io/repos/github/at15/overalls/badge.svg)](https://coveralls.io/github/at15/overalls)
 
 Package overalls takes multi-package go projects, runs test coverage tests on all packages in each directory and finally concatenates into a single file for tools like goveralls.
 
